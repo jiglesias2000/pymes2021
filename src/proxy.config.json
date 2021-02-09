@@ -1,0 +1,8 @@
+{
+    "/api/*": {
+      "target": "https://pymes.com.ar",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }

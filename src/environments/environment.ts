@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  ConexionWebApiAzure: "https://pav2.azurewebsites.net/api/",
+  ConexionWebApiLocal: "https://localhost:44349/api/",
+  ConexionWebApiPymes: "https://pymes.com.ar/api/",
+  ConexionWebApiProxy : "/api/"
 };
 
 /*

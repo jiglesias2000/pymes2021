@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pymes-backend": {
+    "pymes-frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pymes-backend",
+            "outputPath": "dist/pymes-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -24,9 +24,14 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js" 
+            ]
           },
           "configurations": {
             "production": {
@@ -61,18 +66,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "pymes-backend:build"
+            "browserTarget": "pymes-frontend:build",
+            "proxyConfig": "src/proxy.config.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "pymes-backend:build:production"
+              "browserTarget": "pymes-frontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pymes-backend:build"
+            "browserTarget": "pymes-frontend:build"
           }
         },
         "test": {
@@ -109,16 +115,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "pymes-backend:serve"
+            "devServerTarget": "pymes-frontend:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "pymes-backend:serve:production"
+              "devServerTarget": "pymes-frontend:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "pymes-backend"
+  "defaultProject": "pymes-frontend"
 }
