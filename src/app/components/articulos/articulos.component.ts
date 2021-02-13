@@ -8,8 +8,6 @@ import { ArticulosFamiliasService } from "../../services/articulos-familias.serv
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ModalDialogService } from "../../services/modal-dialog.service";
 
-//import {jsPDF} from 'jspdf'   //ref angular reporte pdf  : https://www.positronx.io/angular-pdf-tutorial-export-pdf-in-angular-with-jspdf/
-
 @Component({
   selector: "app-articulos",
   templateUrl: "./articulos.component.html",
@@ -48,8 +46,8 @@ export class ArticulosComponent implements OnInit {
   FormReg: FormGroup;
   submitted = false;
 
-  @ViewChild('htmlData') htmlData:ElementRef;
-  
+  @ViewChild("htmlData") htmlData: ElementRef;
+
   constructor(
     public formBuilder: FormBuilder,
     //private articulosService: MockArticulosService,
@@ -57,7 +55,7 @@ export class ArticulosComponent implements OnInit {
     private articulosService: ArticulosService,
     private articulosFamiliasService: ArticulosFamiliasService,
     private modalDialogService: ModalDialogService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.FormFiltro = this.formBuilder.group({
@@ -93,16 +91,15 @@ export class ArticulosComponent implements OnInit {
   }
 
   GetFamiliasArticulos() {
-    this.articulosFamiliasService.get().subscribe(
-      (res: ArticuloFamilia[]) => {
+    this.articulosFamiliasService.get().subscribe((res: ArticuloFamilia[]) => {
       this.Familias = res;
-      console.log((new Date()).toISOString());
+      console.log(new Date().toISOString());
     });
   }
 
   Agregar() {
     this.AccionABMC = "A";
-    this.FormReg.reset({ Activo: true, IdArticulo : 0 });
+    this.FormReg.reset({ Activo: true, IdArticulo: 0 });
     this.submitted = false;
     //this.FormReg.markAsPristine();  // incluido en el reset
     //this.FormReg.markAsUntouched(); // incluido en el reset
@@ -112,7 +109,11 @@ export class ArticulosComponent implements OnInit {
   Buscar() {
     this.SinBusquedasRealizadas = false;
     this.articulosService
-      .get(this.FormFiltro.value.Nombre, this.FormFiltro.value.Activo, this.Pagina)
+      .get(
+        this.FormFiltro.value.Nombre,
+        this.FormFiltro.value.Activo,
+        this.Pagina
+      )
       .subscribe((res: any) => {
         this.Lista = res.Lista;
         this.RegistrosTotal = res.RegistrosTotal;
@@ -143,7 +144,9 @@ export class ArticulosComponent implements OnInit {
   // comienza la modificacion, luego la confirma con el metodo Grabar
   Modificar(Dto) {
     if (!Dto.Activo) {
-      this.modalDialogService.Alert('No puede modificarse un registro Inactivo.');
+      this.modalDialogService.Alert(
+        "No puede modificarse un registro Inactivo."
+      );
       return;
     }
     this.submitted = false;
@@ -166,18 +169,17 @@ export class ArticulosComponent implements OnInit {
     //convertir fecha de string dd/MM/yyyy a ISO para que la entienda webapi
     var arrFecha = itemCopy.FechaAlta.substr(0, 10).split("/");
     if (arrFecha.length == 3)
-      itemCopy.FechaAlta =
-        new Date(
-          arrFecha[2],
-          arrFecha[1] - 1,
-          arrFecha[0]
-        ).toISOString();
+      itemCopy.FechaAlta = new Date(
+        arrFecha[2],
+        arrFecha[1] - 1,
+        arrFecha[0]
+      ).toISOString();
 
     // agregar post
     if (itemCopy.IdArticulo == 0 || itemCopy.IdArticulo == null) {
       this.articulosService.post(itemCopy).subscribe((res: any) => {
         this.Volver();
-        this.modalDialogService.Alert('Registro agregado correctamente.');
+        this.modalDialogService.Alert("Registro agregado correctamente.");
         this.Buscar();
       });
     } else {
@@ -186,27 +188,25 @@ export class ArticulosComponent implements OnInit {
         .put(itemCopy.IdArticulo, itemCopy)
         .subscribe((res: any) => {
           this.Volver();
-          this.modalDialogService.Alert('Registro modificado correctamente.');
+          this.modalDialogService.Alert("Registro modificado correctamente.");
           this.Buscar();
         });
     }
   }
 
-  // representa la baja logica 
+  // representa la baja logica
   ActivarDesactivar(Dto) {
     this.modalDialogService.Confirm(
       "Esta seguro de " +
-      (Dto.Activo ? "desactivar" : "activar") +
-      " este registro?",
+        (Dto.Activo ? "desactivar" : "activar") +
+        " este registro?",
       undefined,
       undefined,
       undefined,
       () =>
         this.articulosService
           .delete(Dto.IdArticulo)
-          .subscribe((res: any) =>
-            this.Buscar()
-          ),
+          .subscribe((res: any) => this.Buscar()),
       null
     );
   }
@@ -217,19 +217,12 @@ export class ArticulosComponent implements OnInit {
   }
 
   ImprimirListado() {
-    this.modalDialogService.Alert('Sin desarrollar...');
-    // ref angular pdf : https://stackoverflow.com/a/63684298
-    //   let DATA = this.htmlData.nativeElement;
-    //   let doc = new jsPDF('p','pt', 'a4');
-    //   doc.html(DATA, {
-    //     callback: (doc) => {
-    //       doc.output("dataurlnewwindow");
-    //     }
-    //  });
+    this.modalDialogService.Alert("Sin desarrollar...");
   }
 
   GetArticuloFamiliaNombre(Id) {
-    var Nombre = this.Familias.filter(x => x.IdArticuloFamilia === Id)[0].Nombre;
+    var Nombre = this.Familias.filter(x => x.IdArticuloFamilia === Id)[0]
+      .Nombre;
     return Nombre;
   }
 }

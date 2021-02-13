@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import {  HttpClient} from "@angular/common/http";
 import { of, Observable } from "rxjs";
 import { ArticuloFamilia } from "../models/articulo-familia";
-import { environment } from "src/environments/environment";
+import { environment } from "../../environments/environment";
 
 
 @Injectable({

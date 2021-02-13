@@ -1,17 +1,12 @@
-<h3 class="shadow p-2 mb-3 bg-white rounded">
-  {{ Titulo }} <small>{{ TituloAccionABMC[AccionABMC] }}</small>
+<h3>
+	{{ Titulo }} <small>{{ TituloAccionABMC[AccionABMC] }}</small>
 </h3>
 <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-<form
-  name="FormFiltro"
-  [formGroup]="FormFiltro"
-  class="bg-light"
-  *ngIf="AccionABMC == 'L'"
->
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2 text-right"> Nombre: </label>
-    <div class="col-sm-3">
-      <input
+<form name="FormFiltro" [formGroup]="FormFiltro" class="bg-light" *ngIf="AccionABMC == 'L'">
+	<div class="form-group row">
+		<label class="col-form-label col-sm-2 text-right"> Nombre: </label>
+		<div class="col-sm-3">
+			<input
         type="text"
         name="Nombre"
         class="form-control text-uppercase"
@@ -19,64 +14,64 @@
         maxlength="55"
       />
     </div>
-    <label class="col-form-label col-sm-2 text-right"> Activo: </label>
-    <div class="col-sm-3">
-      <select class="form-control" name="Activo" formControlName="Activo">
+			<label class="col-form-label col-sm-2 text-right"> Activo: </label>
+			<div class="col-sm-3">
+				<select class="form-control" name="Activo" formControlName="Activo">
         <option *ngFor="let opt of OpcionesActivo" [ngValue]="opt.Id">
           ‌{{ opt.Nombre }}
         </option>
       </select>
-    </div>
-  </div>
-  <!-- Botones -->
-  <div class="row justify-content-center">
-    <button class="btn btn-primary" (click)="Pagina = 1; Buscar()">
+			</div>
+		</div>
+		<!-- Botones -->
+		<div class="row justify-content-center">
+			<button class="btn btn-primary" (click)="Pagina = 1; Buscar()">
       <span class="fas fa-search"> </span> Consultar
     </button>
-    &nbsp;
-    <button class="btn btn-primary" (click)="Agregar()">
+			&nbsp;
+			<button class="btn btn-primary" (click)="Agregar()">
       <span class="fas fa-plus"> </span>
       Agregar
     </button>
-  </div>
+		</div>
 </form>
 
 <!-- Tabla de resutados de busqueda y Paginador-->
 <div id="divTablaResultados" *ngIf="AccionABMC == 'L' && Lista?.length > 0">
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th class="text-center">Nombre</th>
-        <th class="text-center">Credito Maximo</th>
-        <th class="text-center">Cuit</th>
-        <th class="text-center">Fecha Ingreso</th>
-        <th class="text-center">Activo</th>
-        <th class="text-center text-nowrap">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let dto of Lista">
-        <td>{{ dto.Nombre | uppercase }}</td>
-        <td class="text-right">{{ dto.CreditoMaximo | currency: "$" }}</td>
-        <td class="text-right">{{ dto.Cuit }}</td>
-        <td>{{ dto.FechaIngreso | date: "dd/MM/yyyy" }}</td>
-        <td>{{ dto.Activo ? "SI" : "NO" }}</td>
-        <td class="text-center text-nowrap">
-          <button
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th class="text-center">Nombre</th>
+				<th class="text-center">Credito Maximo</th>
+				<th class="text-center">Cuit</th>
+				<th class="text-center">Fecha Ingreso</th>
+				<th class="text-center">Activo</th>
+				<th class="text-center text-nowrap">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let dto of Lista">
+				<td>{{ dto.Nombre | uppercase }}</td>
+				<td class="text-right">{{ dto.CreditoMaximo | currency: "$" }}</td>
+				<td class="text-right">{{ dto.Cuit }}</td>
+				<td class="text-right">{{ dto.FechaIngreso | date: "dd/MM/yyyy" }}</td>
+				<td>{{ dto.Activo ? "SI" : "NO" }}</td>
+				<td class="text-center text-nowrap">
+					<button
             class="btn btn-sm btn-outline-primary"
             title="Ver"
             (click)="Consultar(dto)"
           >
             <span class="fas fa-eye"></span>
           </button>
-          <button
+					<button
             class="btn btn-sm btn-outline-primary"
             title="Modificar"
             (click)="Modificar(dto)"
           >
             <span class="fas fa-pencil-alt"></span>
           </button>
-          <button
+					<button
             class="btn btn-sm"
             [ngClass]="{
               'btn-outline-danger': dto.Activo,
@@ -87,61 +82,45 @@
           >
             <span class="fas fa-{{ dto.Activo ? 'times' : 'check' }}"></span>
           </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- Paginador-->
-  <div id="divPaginador" class="col-sm-12">
-    <div class="row bg-light">
-      <div class="col-sm-3">
-        <span class="label label-default font-weight-bold"
-          >Registros: {{ RegistrosTotal }}</span
-        >
-      </div>
-      <div class="col-sm-6 text-center">
-        <ngb-pagination
-          [(page)]="Pagina"
-          (pageChange)="Buscar()"
-          [pageSize]="10"
-          [maxSize]="10"
-          [collectionSize]="RegistrosTotal"
-        ></ngb-pagination>
-      </div>
-      <div class="col-sm-3 text-right">
-        <button class="btn btn-primary" (click)="ImprimirListado()">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- Paginador-->
+	<div id="divPaginador" class="col-sm-12">
+		<div class="row bg-light">
+			<div class="col-sm-3">
+				<span class="label label-default font-weight-bold"
+          >Registros: {{ RegistrosTotal }}</span>
+			</div>
+			<div class="col-sm-6 text-center">
+				<ngb-pagination [(page)]="Pagina" (pageChange)="Buscar()" [pageSize]="10" [maxSize]="10"
+					[collectionSize]="RegistrosTotal"></ngb-pagination>
+			</div>
+			<div class="col-sm-3 text-right">
+				<button class="btn btn-primary" (click)="ImprimirListado()">
           <span class="fas fa-print"></span> Imprimir
         </button>
-      </div>
-    </div>
-  </div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!--No se encontraron registros-->
-<div
-  id="divMsjFormFiltro"
-  class="alert alert-info"
-  *ngIf="AccionABMC == 'L' && Lista?.length == 0"
->
-  <span class="fas fa-exclamation-sign"></span>{{ Mensajes["SD"] }}
-  <!-- texto: No se encontraron registros -->
+<div id="divMsjFormFiltro" class="alert alert-info" *ngIf="AccionABMC == 'L' && Lista?.length == 0">
+	<span class="fas fa-exclamation-sign"></span>{{ Mensajes["SD"] }}
+	<!-- texto: No se encontraron registros -->
 </div>
 
 <!-- Registro en Alta,Modificacion y Consulta -->
-<form
-  name="FormReg"
-  [formGroup]="FormReg"
-  *ngIf="AccionABMC != 'L'"
-  class="bg-light"
->
-  <fieldset [disabled]="AccionABMC === 'C'">
-    <!--campo nombre-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="Nombre">
-        Nombre <span class="text-danger">*</span></label
-      >
-      <div class="col-sm-6">
-        <input
+<form name="FormReg" [formGroup]="FormReg" *ngIf="AccionABMC != 'L'" class="bg-light">
+	<fieldset [disabled]="AccionABMC === 'C'">
+		<!--campo nombre-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="Nombre">
+        Nombre <span class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input
           type="text"
           class="form-control"
           formControlName="Nombre"
@@ -154,7 +133,7 @@
           placeholder="Apellidos, Nombres"
         />
 
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Nombre.touched || submitted) &&
@@ -163,7 +142,7 @@
         >
           Dato requerido.
         </span>
-        <span
+				<span
           class="text-danger"
           *ngIf="
             FormReg.controls.Nombre.errors?.minlength ||
@@ -172,16 +151,16 @@
         >
           Dato texto, 4 a 55 caracteres.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo IdTipoDocumento-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="IdTipoDocumento">
+		<!--campo IdTipoDocumento-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="IdTipoDocumento">
         Tipo Documento <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <select
+			<div class="col-sm-6">
+				<select
           name="IdTipoDocumento"
           class="form-control"
           formControlName="IdTipoDocumento"
@@ -202,7 +181,7 @@
           <option></option>
         </select>
 
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.IdTipoDocumento.touched || submitted) &&
@@ -211,16 +190,16 @@
         >
           Dato requerido.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo NumeroDocumento-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="NumeroDocumento">
+		<!--campo NumeroDocumento-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="NumeroDocumento">
         Numero de Documento <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <input
+			<div class="col-sm-6">
+				<input
           type="text"
           name="NumeroDocumento"
           class="form-control"
@@ -232,7 +211,7 @@
             'is-valid': FormReg.controls.NumeroDocumento.valid
           }"
         />
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.NumeroDocumento.touched || submitted) &&
@@ -241,22 +220,21 @@
         >
           Dato requerido.
         </span>
-        <span
+				<span
           class="text-danger"
           *ngIf="FormReg.controls.NumeroDocumento.errors?.pattern"
         >
           Dato numérico, 6 a 10 dígitos sin guiones.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo FechaNacimiento-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2"
-        >Fecha de Nacimiento<span class="text-danger">*</span></label
-      >
-      <div class="col-sm-6">
-        <input
+		<!--campo FechaNacimiento-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2"
+        >Fecha de Nacimiento<span class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input
           class="form-control"
           name="FechaNacimiento"
           formControlName="FechaNacimiento"
@@ -267,7 +245,7 @@
             'is-valid': FormReg.controls.FechaNacimiento.valid
           }"
         />
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.FechaNacimiento.touched || submitted) &&
@@ -276,7 +254,7 @@
         >
           Dato requerido.
         </span>
-        <span
+				<span
           class="text-danger"
           *ngIf="
             FormReg.controls.FechaNacimiento.errors?.pattern
@@ -284,16 +262,16 @@
         >
           Dato fecha, formato dd/mm/aaaa.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo Cuit-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="Cuit">
+		<!--campo Cuit-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="Cuit">
         Cuit <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <input
+			<div class="col-sm-6">
+				<input
           type="text"
           name="Cuit"
           class="form-control"
@@ -305,7 +283,7 @@
             'is-valid': FormReg.controls.Cuit.valid
           }"
         />
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Cuit.touched || submitted) &&
@@ -314,7 +292,7 @@
         >
           Dato requerido.
         </span>
-        <span
+				<span
           class="text-danger"
           *ngIf="
             FormReg.controls.Cuit.errors?.pattern
@@ -322,77 +300,75 @@
         >
           Dato numérico, 11 dígitos sin guiones.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo Observaciones-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2">Observaciones</label>
-      <div class="col-sm-6">
-        <textarea
+		<!--campo Observaciones-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2">Observaciones</label>
+			<div class="col-sm-6">
+				<textarea
           rows="5"
           class="form-control"
           formControlName="Observaciones"
           maxlength="500"
         ></textarea>
-        <span class="d-block text-right"
+				<span class="d-block text-right"
           >{{ FormReg.value.Observaciones?.length || 0 }} de 500
-          caracteres</span
-        >
-      </div>
-    </div>
+          caracteres</span>
+			</div>
+		</div>
 
-    <!--Situacion Economica-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2"
-        >Situacion Economica</label
-      >
-      <div class="col-6">
-        <div class="custom-control custom-checkbox">
-          <input
+		<!--Situacion Economica-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2"
+        >Situacion Economica</label>
+			<div class="col-6">
+				<div class="custom-control custom-checkbox">
+					<input
             class="custom-control-input"
             type="checkbox"
             value=""
             id="TieneTrabajo"
             formControlName="TieneTrabajo"
           />
-          <label class="custom-control-label" for="TieneTrabajo">
+					<label class="custom-control-label" for="TieneTrabajo">
             Tiene Trabajo
           </label>
-        </div>
-        <div class="custom-control custom-checkbox">
-          <input
+				</div>
+				<div class="custom-control custom-checkbox">
+					<input
             class="custom-control-input"
             type="checkbox"
             value=""
             id="TieneAuto"
             formControlName="TieneAuto"
           />
-          <label class="custom-control-label" for="TieneAuto">
+					<label class="custom-control-label" for="TieneAuto">
             Tiene Auto
           </label>
-        </div>
-        <div class="custom-control custom-checkbox">
-          <input
+				</div>
+				<div class="custom-control custom-checkbox">
+					<input
             class="custom-control-input"
             type="checkbox"
             value=""
             id="TieneCasa"
             formControlName="TieneCasa"
           />
-          <label class="custom-control-label" for="TieneCasa">
+					<label class="custom-control-label" for="TieneCasa">
             Tiene Casa
           </label>
-        </div>
-      </div>
-    </div>
+				</div>
+			</div>
+		</div>
 
-    <!--Sexo-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2">Sexo <span class="text-danger">*</span></label>
-      <div class="col-6">
-        <div class="custom-control custom-radio" *ngFor="let opt of Sexos">
-          <input
+		<!--Sexo-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2">Sexo <span class="text-danger">*</span></label>
+			<div class="col-6">
+				<div class="custom-control custom-radio" *ngFor="let opt of Sexos">
+					<input
             class="custom-control-input"
             type="radio"
             name="IdSexo"
@@ -405,11 +381,11 @@
                 FormReg.controls.IdSexo.errors
             }"
           />
-          <label class="custom-control-label" for="{{ 'IdSexo' + opt.IdSexo }}">
+					<label class="custom-control-label" for="{{ 'IdSexo' + opt.IdSexo }}">
             {{ opt.Nombre }}
           </label>
-        </div>
-        <span
+				</div>
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.IdSexo.touched || submitted) &&
@@ -418,16 +394,15 @@
         >
           Dato requerido.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo CreditoMaximo-->
-    <div class="row form-group">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="CreditoMaximo"
-        >CreditoMaximo <span class="text-danger">*</span></label
-      >
-      <div class="col-sm-6">
-        <input
+		<!--campo CreditoMaximo-->
+		<div class="row form-group">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="CreditoMaximo"
+        >CreditoMaximo <span class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input
           type="text"
           name="CreditoMaximo"
           class="form-control"
@@ -439,7 +414,7 @@
             'is-valid': FormReg.controls.CreditoMaximo.valid
           }"
         />
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.CreditoMaximo.touched || submitted) &&
@@ -448,23 +423,23 @@
         >
           Dato requerido.
         </span>
-        <span
+				<span
           class="text-danger"
           *ngIf="FormReg.controls.CreditoMaximo.errors?.pattern"
         >
           Dato numérico, 1 a 8 dígitos, con 2 decimales opcionales, usar "."
           como separador decimal.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo Mail-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="Cuit">
+		<!--campo Mail-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="Cuit">
         Mail <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <input
+			<div class="col-sm-6">
+				<input
           type="text"
           name="Mail"
           class="form-control"
@@ -476,7 +451,7 @@
             'is-valid': FormReg.controls.Mail.valid
           }"
         />
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Mail.touched || submitted) &&
@@ -485,7 +460,7 @@
         >
           Dato requerido.
         </span>
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Mail.touched || submitted) &&
@@ -494,16 +469,16 @@
         >
           Dato con formato de email.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo IdEstadoCivil-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="IdEstadoCivil">
+		<!--campo IdEstadoCivil-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="IdEstadoCivil">
         Estado civil <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <select
+			<div class="col-sm-6">
+				<select
           name="IdEstadoCivil"
           class="form-control"
           formControlName="IdEstadoCivil"
@@ -524,7 +499,7 @@
           <option></option>
         </select>
 
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.IdEstadoCivil.touched || submitted) &&
@@ -533,16 +508,16 @@
         >
           Dato requerido.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo IdPais-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="IdPais">
+		<!--campo IdPais-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="IdPais">
         Pais <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <select
+			<div class="col-sm-6">
+				<select
           name="IdPais"
           class="form-control"
           formControlName="IdPais"
@@ -560,7 +535,7 @@
           <option></option>
         </select>
 
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.IdPais.touched || submitted) &&
@@ -569,16 +544,16 @@
         >
           Dato requerido.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!--campo IdProvincia-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="IdProvincia">
+		<!--campo IdProvincia-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2" for="IdProvincia">
         Provincias <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <select
+			<div class="col-sm-6">
+				<select
           name="IdProvincia"
           class="form-control"
           formControlName="IdProvincia"
@@ -596,7 +571,7 @@
           <option></option>
         </select>
 
-        <span
+				<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.IdProvincia.touched || submitted) &&
@@ -605,18 +580,21 @@
         >
           Dato requerido.
         </span>
-      </div>
-    </div>
+			</div>
+		</div>
 
-    <!-- Campo Departamento -->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2">
+		<!-- Campo Departamento -->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-2">
         Departamento <span class="text-danger">*</span>
       </label>
 
-      <div class="col-sm-6">
-        <div class="input-group">
-          <input
+			<div class="col-sm-6">
+				<div class="input-group">
+					<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
+						<i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
+					</div>
+					<input
             type="text"
             #RefTypeDpto
             class="form-control text-uppercase"
@@ -627,11 +605,10 @@
             [resultFormatter]="typeAheadformatterDpto"
             [inputFormatter]="typeAheadformatterDpto"
           />
-          <div class="input-group-append">
-            <i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
-          </div>
-        </div>
-        <span
+				</div>
+					<small class='ml-5'>Ingrese parte del nombre del departamento a buscar, seleccione con [↑↓] y [Enter] para elegir</small>
+
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.DepartamentoAux.touched || submitted) &&
@@ -640,16 +617,15 @@
         >
           Dato requerido.
         </span>
-      </div>
-    </div>
+				</div>
+			</div>
 
-    <!-- Campo Localidad -->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="Localidad">
-        Localidad <span class="text-danger">*</span></label
-      >
-      <div class="col-sm-6">
-        <input
+			<!-- Campo Localidad -->
+			<div class="form-group row">
+				<label class="col-form-label col-sm-2 offset-sm-2" for="Localidad">
+        Localidad <span class="text-danger">*</span></label>
+				<div class="col-sm-6">
+					<input
           type="text"
           class="form-control"
           formControlName="Localidad"
@@ -660,7 +636,7 @@
             'is-valid': FormReg.controls.Localidad.valid
           }"
         />
-        <span
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Localidad.touched || submitted) &&
@@ -669,7 +645,7 @@
         >
           Dato requerido.
         </span>
-        <span
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Localidad.touched || submitted) &&
@@ -679,16 +655,15 @@
         >
           Dato texto, 5 a 255 caracteres.
         </span>
-      </div>
-    </div>
+				</div>
+			</div>
 
-    <!-- Campo Calle -->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="Calle">
-        Calle <span class="text-danger">*</span></label
-      >
-      <div class="col-sm-6">
-        <input
+			<!-- Campo Calle -->
+			<div class="form-group row">
+				<label class="col-form-label col-sm-2 offset-sm-2" for="Calle">
+        Calle <span class="text-danger">*</span></label>
+				<div class="col-sm-6">
+					<input
           type="text"
           class="form-control"
           formControlName="Calle"
@@ -699,7 +674,7 @@
             'is-valid': FormReg.controls.Calle.valid
           }"
         />
-        <span
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Calle.touched || submitted) &&
@@ -708,7 +683,7 @@
         >
           Dato requerido.
         </span>
-        <span
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.Calle.touched || submitted) &&
@@ -718,16 +693,16 @@
         >
           Dato texto, 5 a 50 caracteres.
         </span>
-      </div>
-    </div>
+				</div>
+			</div>
 
-    <!--campo NumeroCalle-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="NumeroCalle">
+			<!--campo NumeroCalle-->
+			<div class="form-group row">
+				<label class="col-form-label col-sm-2 offset-sm-2" for="NumeroCalle">
         Calle Numero <span class="text-danger">*</span>
       </label>
-      <div class="col-sm-6">
-        <input
+				<div class="col-sm-6">
+					<input
           type="text"
           name="NumeroCalle"
           class="form-control"
@@ -739,7 +714,7 @@
             'is-valid': FormReg.controls.NumeroCalle.valid
           }"
         />
-        <span
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.NumeroCalle.touched || submitted) &&
@@ -748,7 +723,7 @@
         >
           Dato requerido.
         </span>
-        <span
+					<span
           class="text-danger"
           *ngIf="
             FormReg.controls.NumeroCalle.errors?.pattern
@@ -756,15 +731,14 @@
         >
           Dato numérico, 1 a 5 dígitos.
         </span>
-      </div>
-    </div>
-    <!--campo FechaIngreso-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2"
-        >Fecha de Ingreso <span class="text-danger">*</span></label
-      >
-      <div class="col-sm-6">
-        <input
+				</div>
+			</div>
+			<!--campo FechaIngreso-->
+			<div class="form-group row">
+				<label class="col-form-label col-sm-2 offset-sm-2"
+        >Fecha de Ingreso <span class="text-danger">*</span></label>
+				<div class="col-sm-6">
+					<input
           class="form-control"
           name="FechaIngreso"
           formControlName="FechaIngreso"
@@ -775,7 +749,7 @@
             'is-valid': FormReg.controls.FechaIngreso.valid
           }"
         />
-        <span
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.FechaIngreso.touched || submitted) &&
@@ -784,7 +758,7 @@
         >
           Dato requerido.
         </span>
-        <span
+					<span
           class="text-danger"
           *ngIf="
             FormReg.controls.FechaIngreso.errors?.pattern
@@ -792,15 +766,14 @@
         >
           Dato fecha, formato dd/mm/aaaa.
         </span>
-      </div>
-    </div>
-    <!--campo FechaEgreso-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2"
-        >Fecha de Egreso <span class="text-danger">*</span></label
-      >
-      <div class="col-sm-6">
-        <input
+				</div>
+			</div>
+			<!--campo FechaEgreso-->
+			<div class="form-group row">
+				<label class="col-form-label col-sm-2 offset-sm-2"
+        >Fecha de Egreso <span class="text-danger">*</span></label>
+				<div class="col-sm-6">
+					<input
           class="form-control"
           name="FechaEgreso"
           formControlName="FechaEgreso"
@@ -811,7 +784,7 @@
             'is-valid': FormReg.controls.FechaEgreso.valid
           }"
         />
-        <span
+					<span
           class="text-danger"
           *ngIf="
             (FormReg.controls.FechaEgreso.touched || submitted) &&
@@ -820,7 +793,7 @@
         >
           Dato requerido.
         </span>
-        <span
+					<span
           class="text-danger"
           *ngIf="
             FormReg.controls.FechaEgreso.errors?.pattern
@@ -828,51 +801,42 @@
         >
           Dato fecha, formato dd/mm/aaaa.
         </span>
-      </div>
-    </div>
+				</div>
+			</div>
 
-    <!--campo activo-->
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2 offset-sm-2" for="Activo"
-        >Activo</label
-      >
-      <div class="col-sm-6">
-        <select
-          name="Activo"
-          disabled
-          class="form-control"
-          formControlName="Activo"
-        >
+			<!--campo activo-->
+			<div class="form-group row">
+				<label class="col-form-label col-sm-2 offset-sm-2" for="Activo"
+        >Activo</label>
+				<div class="col-sm-6">
+					<select name="Activo" class="form-control"
+          formControlName="Activo"  [attr.disabled]="true">
           <option *ngFor="let opt of OpcionesActivo" [ngValue]="opt.Id">
             ‌{{ opt.Nombre }}
           </option>
         </select>
-      </div>
-    </div>
-  </fieldset>
+				</div>
+			</div>
+	</fieldset>
 
-  <!-- Botones Grabar, Cancelar/Volver' -->
-  <div class="row justify-content-center">
-    <button
+	<!-- Botones Grabar, Cancelar/Volver' -->
+	<div class="row justify-content-center">
+		<button
       *ngIf="AccionABMC !== 'C'"
       class="btn btn-primary"
       (click)="Grabar()"
     >
       <span class="fas fa-check"></span> Grabar
     </button>
-    &nbsp;
-    <button class="btn btn-warning" (click)="Volver()">
+		&nbsp;
+		<button class="btn btn-warning" (click)="Volver()">
       <span class="fas fa-undo"></span>
       {{ AccionABMC == "C" ? "Volver" : "Cancelar" }}
     </button>
-  </div>
+	</div>
 
-  <!--texto: Revisar los datos ingresados...-->
-  <div
-    id="divMsjFormRegistro"
-    *ngIf="submitted && FormReg.invalid"
-    class="row alert alert-danger"
-  >
-    <span class="fas fa-exclamation-sign"></span>{{ Mensajes["RD"] }}
-  </div>
+	<!--texto: Revisar los datos ingresados...-->
+	<div id="divMsjFormRegistro" *ngIf="submitted && FormReg.invalid" class="row alert alert-danger">
+		<span class="fas fa-exclamation-sign"></span>{{ Mensajes["RD"] }}
+	</div>
 </form>

@@ -14,8 +14,8 @@ import {
 
 import { HttpGenericoService } from "../../services/http-generico.service";
 import { HttpClient } from '@angular/common/http';
-import { ModalDialogService } from "src/app/services/modal-dialog.service";
-import { environment } from "src/environments/environment";
+import { ModalDialogService } from "../../services/modal-dialog.service";
+import { environment } from "../../../environments/environment";
 
 
 
@@ -70,15 +70,11 @@ export class VentasComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(term =>
-        term.length < 3
-          ? of([])
+        term.length < 3  ? of([])
           : 
             this.http.get(environment.ConexionWebApiProxy +  "articulos",
               { params: { Pagina:'1', "Nombre": term  }, headers :{'NoBloquearPantalla': '1'}})
-            .pipe(catchError(() => {
-                return of([]);
-              })
-            )
+              .pipe(catchError(() => { return of([]); }))
       ),
       map((x: any) => (x.Lista ? x.Lista : x)) // por ahora porque estoy reciclando la consulta que devueve lista+registrototal
     );
@@ -149,6 +145,11 @@ export class VentasComponent implements OnInit {
   }
 
   Grabar() {
+    if(! this.FormBusqueda.value.Fecha)
+      {
+        this.md.Alert("Debe selecionar una Fecha!")
+        return;
+      }
     if(this.FormBusqueda.value.Cliente?.IdCliente== null)
       {
         this.md.Alert("Debe selecionar un Cliente!")

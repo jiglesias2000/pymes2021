@@ -2,19 +2,20 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { VentasDetalle } from "../../models/VentasDetalle";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
-
 import { Observable, of } from "rxjs";
 import {
+catchError,
   debounceTime,
   distinctUntilChanged,
+map,
   switchMap
 } from "rxjs/operators";
 import { HttpClient } from '@angular/common/http';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ClientesInfoComponent } from '../clientes-info/clientes-info.component';
-import { ModalDialogService } from "src/app/services/modal-dialog.service";
-import { UtilesService } from "src/app/services/utiles.service";
-import { environment } from "src/environments/environment";
+import { ModalDialogService } from "../../services/modal-dialog.service";
+import { UtilesService } from "../../services/utiles.service";
+import { environment } from "../../../environments/environment";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class VentasConsultasComponent implements OnInit {
 
   Titulo = "Ventas Consultas";
   FormBusqueda: FormGroup;
-  Items = null;  //para evitar mostrar el no se encontraron registros
+  Items = null;  //para evitar mostrar el msj no se encontraron registros la primera vez
+  ItemsContador = 0;
   ItemSeleccionado = null;
   ItemsDetalles = [];
   Cliente = null;
@@ -80,13 +82,16 @@ export class VentasConsultasComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(searchText =>
-
-        searchText.length < 3 ? of([]) // menos de tres caracteres no busca
-        :
-          this.http.get(environment.ConexionWebApiProxy +  "clientes/typeahead", 
-                     { params: { Nombre: searchText }, headers: { 'NoBloquearPantalla': '1' } })
-      )
+        searchText.length < 3 ? of([])   // menos de tres caracteres no busca
+          :
+        this.http.get(environment.ConexionWebApiProxy +  "clientes/typeahead", 
+        { params: { Nombre: searchText }, headers: { 'NoBloquearPantalla': '1' } })
+        .pipe(catchError(() => { return of([]); }))
+      ),
+       map((x: any) => x.Lista ? x.Lista : x)  // por ahora porque estoy reciclando la consulta que devueve lista+registrototal
+      
     );
+
   typeAheadformatter_cli(x) {
     return x.Nombre; // viene del servicio
   }
@@ -107,7 +112,7 @@ export class VentasConsultasComponent implements OnInit {
   Consultar() {
     // envio el formulario de busqueda completo
     let params = this.FormBusqueda.value;
-    params.IdCliente = this.Cliente?.IdCliente;   //error porque se pierde luego de cambiar la fecha
+    params.IdCliente = this.Cliente?.IdCliente;  
     this.http.get(environment.ConexionWebApiProxy +  "ventas", { params: { ...params } })
       .subscribe(x => {
         this.Items = x as any;
@@ -120,6 +125,8 @@ export class VentasConsultasComponent implements OnInit {
     this.http.get(environment.ConexionWebApiProxy +  "ventasdetalles/" + Item.IdVenta)
       .subscribe(x => {
         this.ItemsDetalles = x as any;
+        this.ItemsContador = 0;     
+        this.ItemsDetalles.forEach( item => this.ItemsContador  +=  +item.Cantidad) ;
         setTimeout(() => {
           document.getElementById("divVentasDetalles").scrollIntoView();
         }, 100);

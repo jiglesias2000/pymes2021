@@ -7,7 +7,7 @@ import {
 } from "@angular/common/http";
 import { of } from "rxjs";
 import { Articulo } from "../models/articulo";
-import { environment } from "src/environments/environment";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -15,10 +15,9 @@ import { environment } from "src/environments/environment";
 export class ArticulosService {
   resourceUrl: string;
   constructor(private httpClient: HttpClient) {
-    //this.resourceUrl = environment.ConexionWebApiProxy +  "Articulos/"
+    this.resourceUrl = environment.ConexionWebApiProxy + "Articulos/";
     //this.resourceUrl = environment.ConexionWebApiAzure +  "articulos" + "/";
-    this.resourceUrl = environment.ConexionWebApiLocal +  "articulos" + "/";
-
+    //this.resourceUrl = environment.ConexionWebApiLocal + "articulos" + "/";
   }
 
   get(Nombre: string, Activo: boolean, Pagina: number) {
@@ -26,7 +25,7 @@ export class ArticulosService {
     if (Nombre != null) {
       params = params.append("Nombre", Nombre);
     }
-    if (Activo != null) {  
+    if (Activo != null) {
       params = params.append("Activo", Activo.toString());
     }
     params = params.append("Pagina", Pagina.toString());
@@ -38,11 +37,11 @@ export class ArticulosService {
     return this.httpClient.get(this.resourceUrl + Id);
   }
 
-  post(obj:Articulo) {
+  post(obj: Articulo) {
     return this.httpClient.post(this.resourceUrl, obj);
   }
 
-  put(Id: number, obj:Articulo) {
+  put(Id: number, obj: Articulo) {
     return this.httpClient.put(this.resourceUrl + Id, obj);
   }
 

@@ -1,7 +1,7 @@
 <h3>{{Titulo}} <small>{{TituloAccionABMC[AccionABMC]}}</small></h3>
 
 <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-<form name="FormFiltro" [formGroup]='FormFiltro' class="bg-light" *ngIf="AccionABMC == 'L'" >
+<form name="FormFiltro" [formGroup]='FormFiltro' *ngIf="AccionABMC == 'L'">
 	<div class="form-group row">
 		<label class="col-form-label col-sm-2 offset-sm-1">
             Nombre:
@@ -25,7 +25,7 @@
 			<button class="btn btn-primary" (click)="Pagina=1; Buscar();">
             <span class="fas fa-search"> </span> Consultar
         </button>
-        &nbsp;
+			&nbsp;
 			<button class="btn btn-primary" (click)="Agregar()">
             <span class="fas fa-plus"> </span> 
             Agregar
@@ -34,7 +34,7 @@
 </form>
 
 <!-- Tabla de resutados de busqueda y Paginador-->
-<div id="divTablaResultados" *ngIf="AccionABMC == 'L' && Lista?.length > 0" >
+<div id="divTablaResultados" *ngIf="AccionABMC == 'L' && Lista?.length > 0">
 	<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
@@ -50,9 +50,9 @@
 		<tbody>
 			<tr *ngFor="let dto of Lista">
 				<td>{{dto.Nombre | uppercase}}</td>
-        <td class="text-right">{{dto.Precio | currency:'$'}}</td>
+				<td class="text-right">{{dto.Precio | currency:'$'}}</td>
 				<td class="text-right">{{dto.Stock}}</td>
-				<td>{{dto.FechaAlta| date:'dd/MM/yyyy'}}</td>
+				<td class="text-right">{{dto.FechaAlta| date:'dd/MM/yyyy'}}</td>
 				<td>{{GetArticuloFamiliaNombre(dto.IdArticuloFamilia)}}</td>
 				<td>{{dto.Activo ? 'SI' : 'NO'}}</td>
 				<td class="text-center text-nowrap">
@@ -89,7 +89,8 @@
 </div>
 
 <!--No se encontraron registros-->
-<div id="divMsjFormFiltro" class="alert alert-info" *ngIf="AccionABMC == 'L' && !SinBusquedasRealizadas && Lista?.length== 0">
+<div id="divMsjFormFiltro" class="alert alert-info"
+	*ngIf="AccionABMC == 'L' && !SinBusquedasRealizadas && Lista?.length== 0">
 	<span class="fas fa-exclamation-sign"></span>{{Mensajes['SD']}}
 	<!-- texto: No se encontraron registros -->
 </div>
@@ -103,7 +104,7 @@
 			<label class="col-form-label col-sm-2 offset-sm-2" for="Nombre">Nombre <span
                     class="text-danger">*</span></label>
 			<div class="col-sm-6">
-				<input type="text" class="form-control" formControlName="Nombre" 
+				<input type="text" class="form-control" formControlName="Nombre"
          [ngClass]="{'is-invalid': (FormReg.controls.Nombre.touched || submitted)  
             && FormReg.controls.Nombre.errors}" />
 
@@ -111,11 +112,11 @@
                         && FormReg.controls.Nombre.errors?.required">
                     Dato requerido.
                 </span>
-                <span class="text-danger" *ngIf="(FormReg.controls.Nombre.touched || submitted) 
+				<span class="text-danger" *ngIf="(FormReg.controls.Nombre.touched || submitted) 
                        && (FormReg.controls.Nombre.errors?.minlength || FormReg.controls.Nombre.errors?.maxlength) ">
                     Dato texto, 4 a 55 caracteres.
                 </span>
-                
+
 			</div>
 		</div>
 
@@ -224,11 +225,11 @@
 		<div class="form-group row">
 			<label class="col-form-label col-sm-2 offset-sm-2" for="Activo">Activo</label>
 			<div class="col-sm-6">
-				<select name="Activo" disabled class="form-control" formControlName="Activo">
-                    <option *ngFor="let opt of OpcionesActivo" [ngValue]="opt.Id">
+				<select class="form-control" name="Activo" formControlName="Activo" [attr.disabled]="true">
+            <option *ngFor="let opt of OpcionesActivo" [ngValue]="opt.Id" >
                         ‌{{ opt.Nombre }}
-					</option>
-                </select>
+			      </option>            
+        </select>
 			</div>
 		</div>
 	</fieldset>

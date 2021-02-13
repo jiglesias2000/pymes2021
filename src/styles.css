@@ -1,1 +1,58 @@
-/* You can add global styles to this file, and also import other style files */
+/* Add application styles & imports to this file! */
+body {
+  min-height: 100%;
+}
+
+h3 {
+  border-bottom-style: solid;
+  border-color: gray;
+  border-bottom-width: thin;
+  padding-bottom: 0.3em;
+  margin-bottom: 0.5em;
+}
+
+form {
+  background-color: rgb(241, 243, 247);
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: thin;
+  margin: 0em 0.5em 0.5em 0.5em;
+  padding: 0.5em;
+}
+
+/* todos los imput a mayusculas, y no sus placeholders*/
+input {
+  text-transform: uppercase;
+}
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  text-transform: none;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  text-transform: none;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  text-transform: none;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  text-transform: none;
+}
+::placeholder {
+  /* Recent browsers */
+  text-transform: none;
+}
+
+thead {
+  /* bootstrap thead-light*/
+  color: #495057;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.copyright {
+  padding: 1em;
+  background-color: rgb(241, 243, 247);
+}

@@ -1,32 +1,36 @@
 <h3>{{ Titulo }}</h3>
 
-<form [formGroup]="FormBusqueda" class="bg-light">
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2 offset-sm-1"> Fecha: </label>
-    <div class="col-sm-3 input-group">
-      <input
-        class="form-control text-uppercase"
+<form [formGroup]="FormBusqueda">
+	<div class="form-group row">
+		<label class="col-form-label col-sm-2 offset-sm-1 text-ri">Fecha<span class="text-danger">* </span>:</label>
+		<div class="col-sm-3 input-group">
+			<input
+        class="form-control"
         placeholder="dd/mm/aaaa"
         formControlName="Fecha"
         ngbDatepicker
         #d="ngbDatepicker"
       />
-      <div class="input-group-append">
-        <button
+			<div class="input-group-append">
+				<button
           class="btn btn-outline-secondary"
           (click)="d.toggle()"
           type="button"
         >
           <i class="fa fa-calendar" aria-hidden="true"></i>
         </button>
-      </div>
-    </div>
-  </div>
+			</div>
+		</div>
+	</div>
 
-  <div class="form-group row">
-    <label class="col-form-label col-sm-2 offset-sm-1"> Cliente: </label>
-    <div class="col-sm-6 input-group">
-      <input
+	<div class="form-group row">
+		<label class="col-form-label col-sm-2 offset-sm-1">Cliente<span class="text-danger">* </span>:</label>
+		<div class="col-sm-6">
+			<div class="input-group">
+				<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
+					<i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
+				</div>
+				<input
         type="text"
         autofocus
         class="form-control text-uppercase"
@@ -37,65 +41,68 @@
         [resultFormatter]="typeAheadformatter_cli"
         [inputFormatter]="typeAheadformatter_cli"
       />
-      <div class="input-group-append">
-        <i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
-      </div>
-    </div>
-  </div>
-</form>
+			</div>
+				<small class='ml-3'>Ingrese parte del nombre del cliente a buscar, seleccione con [↑↓] y [Enter] para elegir</small>
 
-<hr />
-<div class="form-group row">
-  <label class="col-form-label col-sm-2 offset-sm-1"> Buscar articulo: </label>
-  <div class="col-sm-6  input-group">
-    <input
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 offset-sm-1">Agregar Articulo<span class="text-danger">* </span>:</label>
+			<div class="col-sm-6">
+				<div class="input-group">
+					<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
+						<i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
+					</div>
+					<input
       type="text"
-      id="FormFiltro_Nombre"
-      #RefTypeArticulo
       class="form-control text-uppercase"
+      #RefArticulo
       [ngbTypeahead]="typeAheadSearch"
-      (selectItem)="typeAheadselectItem($event, RefTypeArticulo)"
-      (blur)="typeAheadBlur(RefTypeArticulo)"
+      (selectItem)="typeAheadselectItem($event, RefArticulo)"
+      (blur)="typeAheadBlur(RefArticulo)"
       [resultFormatter]="typeAheadformatter"
       [inputFormatter]="typeAheadformatter"
     />
-    <div class="input-group-append">
-      <i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
-    </div>
-  </div>
-</div>
+			</div>
+					<small class='ml-3'>Ingrese parte del nombre del articulo a buscar, seleccione con [↑↓] y [Enter] para agregar</small>
+				</div>
+			</div>
 
-<div id="divTablaResultados" *ngIf="Items.length > 0">
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th class="text-center">Nombre</th>
-        <th class="text-center">Cantidad</th>
-        <th class="text-center">Precio</th>
-        <th class="text-center">Subtotal</th>
-        <th class="text-center text-nowrap">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of Items; let i = index">
-        <td>{{ item.Nombre | uppercase }}</td>
-        <td class="text-right">
-          <span class="badge badge-primary" title="sumar">
+</form>
+
+
+<div id="divTablaArticulos">
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th class="text-center">Nombre</th>
+				<th class="text-center">Cantidad</th>
+				<th class="text-center">Precio</th>
+				<th class="text-center">Subtotal</th>
+				<th class="text-center text-nowrap">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of Items; let i = index">
+				<td>{{ item.Nombre | uppercase }}</td>
+				<td class="text-right">
+					<span class="badge badge-primary" title="Eliminar 1">
             <span (click)="CambiarCantidad(i, -1)" class="fas fa-minus"></span>
-          </span>
-          {{ item.Cantidad }}
-          <span
+					</span>
+					{{ item.Cantidad }}
+					<span
             class="badge badge-primary"
-            title="Eliminar"
+            title="Agregar 1"
             (click)="CambiarCantidad(i, 1)"
           >
             <span class="fas fa-plus"></span>
-          </span>
-        </td>
-        <td class="text-right">{{ item.Precio | currency: "$" }}</td>
-        <td class="text-right">{{ item.Precio * item.Cantidad | number }}</td>
-        <td class="text-center text-nowrap">
-          <button
+					</span>
+				</td>
+				<td class="text-right">{{ item.Precio | currency: "$" }}</td>
+				<td class="text-right">{{ item.Precio * item.Cantidad | currency: "$" }}</td>
+				<td class="text-center text-nowrap">
+					<button
             type="button"
             class="btn btn-sm btn-outline-danger"
             title="Eliminar"
@@ -103,25 +110,25 @@
           >
             <span class="fas fa-trash-alt"></span>
           </button>
-        </td>
-      </tr>
-      <tr>
-        <th class="text-right">Items</th>
-        <th class="text-right">
-          <span class="badge badge-secondary mr-3">{{ TotalCantidad }} </span>
-        </th>
-        <th></th>
-        <th class="text-right">
-          <span class="badge badge-secondary"
+				</td>
+			</tr>
+			<tr>
+				<th class="text-right"></th>
+				<th class="text-right">
+					<span class="badge badge-secondary mr-3">Items {{ TotalCantidad }} </span>
+				</th>
+				<th></th>
+				<th class="text-right">
+					<span class="badge badge-secondary"
             >Total {{ TotalPrecio | currency: "$" }}
           </span>
-        </th>
-        <th class="text-center">
-          <button type="button" class="btn btn-info" (click)="Grabar()">
-            Grabar
+				</th>
+				<th class="text-center">
+					<button type="button" class="btn btn-info" (click)="Grabar()">
+            Grabar venta
           </button>
-        </th>
-      </tr>
-    </tbody>
-  </table>
+				</th>
+			</tr>
+		</tbody>
+	</table>
 </div>

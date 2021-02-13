@@ -6,8 +6,12 @@ export const environment = {
   production: false,
   ConexionWebApiAzure: "https://pav2.azurewebsites.net/api/",
   ConexionWebApiLocal: "https://localhost:44349/api/",
-  ConexionWebApiPymes: "https://pymes.com.ar/api/",
-  ConexionWebApiProxy : "/api/"
+  ConexionWebApiPymes: "https://pymes.com.ar/api/", // mapeado en archivo host a locahost
+  ConexionWebApiUtn: "http://labsys.frc.utn.edu.ar:8443/api/",
+
+  //ConexionWebApiProxy: "https://pav2.azurewebsites.net/api/"
+  ConexionWebApiProxy: "https://localhost:44349/api/"
+  //ConexionWebApiProxy : "/api/"
 };
 
 /*

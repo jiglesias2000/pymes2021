@@ -6,7 +6,7 @@ import {
   HttpParams
 } from "@angular/common/http";
 import { of } from "rxjs";
-import { environment } from "src/environments/environment";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -14,15 +14,17 @@ import { environment } from "src/environments/environment";
 export class HttpGenericoService {
   pathResourceUrl: string;
   constructor(private httpClient: HttpClient) {
-        //this.pathResourceUrl = environment.ConexionWebApiProxy +  ""
-        this.pathResourceUrl  = environment.ConexionWebApiAzure;
+    //this.pathResourceUrl = environment.ConexionWebApiProxy +  ""
+    this.pathResourceUrl = environment.ConexionWebApiAzure;
   }
 
   get(Recurso: string, params) {
-    return this.httpClient.get(this.pathResourceUrl + Recurso  , { params: params });
+    return this.httpClient.get(this.pathResourceUrl + Recurso, {
+      params: params
+    });
   }
 
-  getById(Recurso : string, Id: any) {
+  getById(Recurso: string, Id: any) {
     return this.httpClient.get(this.pathResourceUrl + Recurso + "/" + Id);
   }
 
