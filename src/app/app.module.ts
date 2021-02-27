@@ -45,10 +45,10 @@ import { DatePickerSpanish } from "./shared/DatePickerSpanish";
         { path: "inicio", component: InicioComponent },
         { path: "articulos", component: ArticulosComponent },
         { path: "articulosfamilias", component: ArticulosFamiliasComponent },
+        //Ref Angular LazyLoad #1  https://angular.io/guide/lazy-loading-ngmodules
         //{ path: 'clientes', component: ClientesComponent },
         { path: "ventas", component: VentasComponent },
         { path: "ventasconsultas", component: VentasConsultasComponent },
-        //Ref1 Angular LazyLoad  https://angular.io/guide/lazy-loading-ngmodules
         {
           path: "clientes",
           loadChildren: () =>
@@ -60,7 +60,7 @@ import { DatePickerSpanish } from "./shared/DatePickerSpanish";
       ],
       {
         relativeLinkResolution: "legacy",
-        // Ref2 Angular LazyLoad  https://angular.io/guide/lazy-loading-ngmodules
+        // Ref Angular LazyLoad #2 https://angular.io/guide/lazy-loading-ngmodules
         preloadingStrategy: PreloadAllModules
       }
     ),

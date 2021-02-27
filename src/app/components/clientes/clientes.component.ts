@@ -124,7 +124,6 @@ export class ClientesComponent implements OnInit, OnDestroy {
       FechaEgreso: [
         null,
         [
-          Validators.required,
           Validators.pattern(
             "(0[1-9]|[12][0-9]|3[01])[-/](0[1-9]|1[012])[-/](19|20)[0-9]{2}"
           ),
@@ -267,7 +266,8 @@ export class ClientesComponent implements OnInit, OnDestroy {
     //si modifico el texto con el buscado, no se acepta y se borra.
     if (input.value != this.FormReg.value.DepartamentoAux?.Nombre) {
       input.value = "";
-      this.FormReg.value.IdDepartamento = null;
+      this.FormReg.patchValue({ IdDepartamento: null });
+      //this.FormReg.value.IdDepartamento = null;  // no funciona bien
     }
   }
 

@@ -9,9 +9,10 @@ export const environment = {
   ConexionWebApiPymes: "https://pymes.com.ar/api/", // mapeado en archivo host a locahost
   ConexionWebApiUtn: "http://labsys.frc.utn.edu.ar:8443/api/",
 
-  //ConexionWebApiProxy: "https://pav2.azurewebsites.net/api/"
-  ConexionWebApiProxy: "https://localhost:44349/api/"
   //ConexionWebApiProxy : "/api/"
+  //ConexionWebApiProxy: "https://pav2.azurewebsites.net/api/"
+  //ConexionWebApiProxy: "https://localhost:44349/api/"
+  ConexionWebApiProxy: "https://pymes.com.ar/api/"
 };
 
 /*

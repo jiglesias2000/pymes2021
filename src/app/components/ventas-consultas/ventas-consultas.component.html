@@ -1,6 +1,6 @@
 <h3>{{ Titulo }}</h3>
 
-<form [formGroup]="FormBusqueda">
+<form [formGroup]="FormBusqueda" class="rounded-lg">
 
 	<div class="form-group row">
 		<label class="col-form-label col-sm-2 offset-sm-1"> Fecha desde: </label>
@@ -50,11 +50,12 @@
 		<div class="col-sm-6">
 			<div class="input-group">
 				<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
-					<i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
+					<span class="input-group-text"> <i class="fas fa-search"></i></span>
 				</div>
 				<input
           type="text"
-          class="form-control text-uppercase"
+          placeholder="escriba aqui para buscar"
+          class="form-control"
             #refCliente
           [ngbTypeahead]="typeAheadSearch_cli"
           (selectItem)="typeAheadselectItem_cli($event, refCliente)"
@@ -62,17 +63,15 @@
           [resultFormatter]="typeAheadformatter_cli"
           [inputFormatter]="typeAheadformatter_cli"
         />
-				<div class="input-group-append">
 					<button
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-secondary mx-3"
             (click)="VerInfoCliente()"
             type="button"
           >
             <i class="fas fa-info-circle" aria-hidden="true" ngbTooltip="mas informacion..."></i>
           </button>
-				</div>
 			</div>
-			<small class='ml-5'>Ingrese parte del nombre del Cliente a buscar, seleccione con [↑↓] y [Enter] para elegir</small>
+			<!-- <small class='ml-5'>Ingrese parte del nombre del Cliente a buscar, seleccione con [↑↓] y [Enter] para elegir</small> -->
 
 		</div>
 
@@ -96,7 +95,7 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of Items">
-				<td>{{ item.Fecha | date: "dd/MM/yyyy" }}</td>
+				<td>{{ item.Fecha | date: "dd/MM/yyyy HH:mm" }}</td>
 				<td>{{ item.ClienteNombre | uppercase }}</td>
 				<td class="text-right">{{ item.Total | currency: "$" }}</td>
 				<td class="text-center text-nowrap">

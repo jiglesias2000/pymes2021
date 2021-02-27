@@ -1,28 +1,43 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UtilesService {
+  constructor() {}
 
-  constructor() { }
-
-  Fecha_SumarDias(FechaISO : string, Dias : number) 
-  {
-    var d = new Date(FechaISO); 
+  Fecha_SumarDiasHoras(
+    FechaISO: string,
+    Dias: number,
+    Horas: number,
+    Minutos: number
+  ) {
+    var d = new Date(FechaISO);
     d.setDate(d.getDate() + Dias);
+    if (Horas) d.setHours(d.getHours() + Horas);
+    if (Minutos) d.setMinutes(d.getMinutes() + Minutos);
     return d.toISOString();
   }
   ///
   /// compara fechas 0 iguales, 1 mayor, -1 menor
   ///
-  Fecha_Comparar(FechaISO1: string, FechaISO2: string)
-  {
+  Fecha_Comparar(FechaISO1: string, FechaISO2: string) {
     let f1 = new Date(FechaISO1);
-    let f2 = new Date(FechaISO2)
-    if (f1==f2) return 0;
-    if(f1>f2) return 1;
+    let f2 = new Date(FechaISO2);
+    if (f1 == f2) return 0;
+    if (f1 > f2) return 1;
     return -1;
+  }
+  FechaHoraActual_ISO() {
+    // problema con offset al convertir toIsoString no tomo hora local
+    let Fecha = new Date().toISOString();
+    Fecha = this.Fecha_SumarDiasHoras(
+      Fecha,
+      0,
+      0,
+      -new Date().getTimezoneOffset()
+    ); // sacar el offset local de la hora
+    return Fecha;
   }
 
   Fecha_ISO_ddMMyyyy(FechaISO: string) {
@@ -30,25 +45,35 @@ export class UtilesService {
       var arrFecha = FechaISO.substr(0, 10).split("-");
       return arrFecha[2] + "/" + arrFecha[1] + "/" + arrFecha[0];
     } catch (error) {
-      return null;
+      return "";
     }
   }
 
-  Fecha_ISO_Struct(FEchaISO:string){
+  Fecha_ISO_Struct(FEchaISO: string) {
     try {
       let f = new Date(FEchaISO);
-      let struct =  {year : f.getFullYear(), month : f.getMonth()+1, day : f.getDate()} ;
-      return struct ;
+      let struct = {
+        year: f.getFullYear(),
+        month: f.getMonth() + 1,
+        day: f.getDate()
+      };
+      return struct;
     } catch (error) {
       return null;
     }
   }
 
-  Fecha_ddMMyyyy_ISO(FechaString: string)
-  {
-    let arrFecha = FechaString.substr(0, 10).split("/");
-    if (arrFecha.length == 3)
-      return   new Date( +arrFecha[2], +arrFecha[1] - 1, +arrFecha[0] ).toISOString();
+  Fecha_ddMMyyyy_ISO(FechaString: string) {
+    try {
+      let arrFecha = FechaString.substr(0, 10).split("/");
+      if (arrFecha.length == 3)
+        return new Date(
+          +arrFecha[2],
+          +arrFecha[1] - 1,
+          +arrFecha[0]
+        ).toISOString();
+    } catch (error) {
+      return "";
+    }
   }
-
 }

@@ -2,20 +2,20 @@
 	{{ Titulo }} <small>{{ TituloAccionABMC[AccionABMC] }}</small>
 </h3>
 <!-- Formulario Filtro de busqueda, se ve cuando la accion es Listado(busqueda/listado)-->
-<form name="FormFiltro" [formGroup]="FormFiltro" class="bg-light" *ngIf="AccionABMC == 'L'">
+<form name="FormFiltro" [formGroup]="FormFiltro" class="pr-sm" *ngIf="AccionABMC == 'L'">
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2 text-right"> Nombre: </label>
-		<div class="col-sm-3">
+		<label class="col-form-label col-sm-4 col-md-2 text-sm-right"> Nombre: </label>
+		<div class="col-sm-8 col-md-4">
 			<input
         type="text"
         name="Nombre"
-        class="form-control text-uppercase"
+        class="form-control"
         formControlName="Nombre"
         maxlength="55"
       />
     </div>
-			<label class="col-form-label col-sm-2 text-right"> Activo: </label>
-			<div class="col-sm-3">
+			<label class="col-form-label  col-sm-4 col-md-2 text-sm-right"> Activo: </label>
+			<div class="col-sm-8 col-md-4">
 				<select class="form-control" name="Activo" formControlName="Activo">
         <option *ngFor="let opt of OpcionesActivo" [ngValue]="opt.Id">
           ‌{{ opt.Nombre }}
@@ -26,11 +26,10 @@
 		<!-- Botones -->
 		<div class="row justify-content-center">
 			<button class="btn btn-primary" (click)="Pagina = 1; Buscar()">
-      <span class="fas fa-search"> </span> Consultar
-    </button>
-			&nbsp;
+        <span class="fas fa-search"> </span> Consultar
+      </button>
 			<button class="btn btn-primary" (click)="Agregar()">
-      <span class="fas fa-plus"> </span>
+        <span class="fas fa-plus"> </span>
       Agregar
     </button>
 		</div>
@@ -42,8 +41,8 @@
 		<thead>
 			<tr>
 				<th class="text-center">Nombre</th>
-				<th class="text-center">Credito Maximo</th>
 				<th class="text-center">Cuit</th>
+				<th class="text-center">Credito Maximo</th>
 				<th class="text-center">Fecha Ingreso</th>
 				<th class="text-center">Activo</th>
 				<th class="text-center text-nowrap">Acciones</th>
@@ -52,8 +51,8 @@
 		<tbody>
 			<tr *ngFor="let dto of Lista">
 				<td>{{ dto.Nombre | uppercase }}</td>
-				<td class="text-right">{{ dto.CreditoMaximo | currency: "$" }}</td>
 				<td class="text-right">{{ dto.Cuit }}</td>
+				<td class="text-right">{{ dto.CreditoMaximo | currency: "$" }}</td>
 				<td class="text-right">{{ dto.FechaIngreso | date: "dd/MM/yyyy" }}</td>
 				<td>{{ dto.Activo ? "SI" : "NO" }}</td>
 				<td class="text-center text-nowrap">
@@ -93,7 +92,7 @@
 				<span class="label label-default font-weight-bold"
           >Registros: {{ RegistrosTotal }}</span>
 			</div>
-			<div class="col-sm-6 text-center">
+			<div class="col-sm-8 col-md-6 text-center">
 				<ngb-pagination [(page)]="Pagina" (pageChange)="Buscar()" [pageSize]="10" [maxSize]="10"
 					[collectionSize]="RegistrosTotal"></ngb-pagination>
 			</div>
@@ -113,13 +112,13 @@
 </div>
 
 <!-- Registro en Alta,Modificacion y Consulta -->
-<form name="FormReg" [formGroup]="FormReg" *ngIf="AccionABMC != 'L'" class="bg-light">
+<form name="FormReg" [formGroup]="FormReg" *ngIf="AccionABMC != 'L'" class="rounded-lg">
 	<fieldset [disabled]="AccionABMC === 'C'">
 		<!--campo nombre-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="Nombre">
-        Nombre <span class="text-danger">*</span></label>
-			<div class="col-sm-6">
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="Nombre">
+        Nombre<span class="text-danger">*</span>:</label>
+			<div class="col-sm-8 col-md-6">
 				<input
           type="text"
           class="form-control"
@@ -156,10 +155,10 @@
 
 		<!--campo IdTipoDocumento-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="IdTipoDocumento">
-        Tipo Documento <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="IdTipoDocumento">
+        Tipo Documento<span class="text-danger">*</span>:
       </label>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<select
           name="IdTipoDocumento"
           class="form-control"
@@ -195,10 +194,10 @@
 
 		<!--campo NumeroDocumento-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="NumeroDocumento">
-        Numero de Documento <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="NumeroDocumento">
+        Numero de Documento<span class="text-danger">*</span>:
       </label>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<input
           type="text"
           name="NumeroDocumento"
@@ -231,9 +230,9 @@
 
 		<!--campo FechaNacimiento-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2"
-        >Fecha de Nacimiento<span class="text-danger">*</span></label>
-			<div class="col-sm-6">
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 "
+        >Fecha de Nacimiento<span class="text-danger">*</span>:</label>
+			<div class="col-sm-8 col-md-6">
 				<input
           class="form-control"
           name="FechaNacimiento"
@@ -267,10 +266,10 @@
 
 		<!--campo Cuit-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="Cuit">
-        Cuit <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="Cuit">
+        Cuit<span class="text-danger">*</span>:
       </label>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<input
           type="text"
           name="Cuit"
@@ -305,24 +304,24 @@
 
 		<!--campo Observaciones-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2">Observaciones</label>
-			<div class="col-sm-6">
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 ">Observaciones:</label>
+			<div class="col-sm-8 col-md-6">
 				<textarea
           rows="5"
-          class="form-control"
+          class="form-control is-valid"
           formControlName="Observaciones"
           maxlength="500"
         ></textarea>
-				<span class="d-block text-right"
+				<small class="d-block text-right"
           >{{ FormReg.value.Observaciones?.length || 0 }} de 500
-          caracteres</span>
+          caracteres</small>
 			</div>
 		</div>
 
 		<!--Situacion Economica-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2"
-        >Situacion Economica</label>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 "
+        >Situacion Economica:</label>
 			<div class="col-6">
 				<div class="custom-control custom-checkbox">
 					<input
@@ -365,7 +364,7 @@
 
 		<!--Sexo-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2">Sexo <span class="text-danger">*</span></label>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 ">Sexo<span class="text-danger">*</span>:</label>
 			<div class="col-6">
 				<div class="custom-control custom-radio" *ngFor="let opt of Sexos">
 					<input
@@ -399,9 +398,9 @@
 
 		<!--campo CreditoMaximo-->
 		<div class="row form-group">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="CreditoMaximo"
-        >CreditoMaximo <span class="text-danger">*</span></label>
-			<div class="col-sm-6">
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="CreditoMaximo"
+        >CreditoMaximo<span class="text-danger">*</span>:</label>
+			<div class="col-sm-8 col-md-6">
 				<input
           type="text"
           name="CreditoMaximo"
@@ -427,7 +426,7 @@
           class="text-danger"
           *ngIf="FormReg.controls.CreditoMaximo.errors?.pattern"
         >
-          Dato numérico, 1 a 8 dígitos, con 2 decimales opcionales, usar "."
+          Dato numérico, 1 a 8 dígitos mas 2 decimales opcionales, usar "."
           como separador decimal.
         </span>
 			</div>
@@ -435,10 +434,10 @@
 
 		<!--campo Mail-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="Cuit">
-        Mail <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="Cuit">
+        Mail<span class="text-danger">*</span>:
       </label>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<input
           type="text"
           name="Mail"
@@ -474,10 +473,10 @@
 
 		<!--campo IdEstadoCivil-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="IdEstadoCivil">
-        Estado civil <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="IdEstadoCivil">
+        Estado civil<span class="text-danger">*</span>:
       </label>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<select
           name="IdEstadoCivil"
           class="form-control"
@@ -513,10 +512,10 @@
 
 		<!--campo IdPais-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="IdPais">
-        Pais <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="IdPais">
+        Pais<span class="text-danger">*</span>:
       </label>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<select
           name="IdPais"
           class="form-control"
@@ -549,10 +548,10 @@
 
 		<!--campo IdProvincia-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2" for="IdProvincia">
-        Provincias <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="IdProvincia">
+        Provincias<span class="text-danger">*</span>:
       </label>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<select
           name="IdProvincia"
           class="form-control"
@@ -585,29 +584,34 @@
 
 		<!-- Campo Departamento -->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-2">
-        Departamento <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-4 col-md-3 offset-md-1 ">
+        Departamento<span class="text-danger">*</span>:
       </label>
 
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-md-6">
 				<div class="input-group">
 					<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
-						<i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
+						<span class="input-group-text"> <i class="fas fa-search"></i></span>
 					</div>
 					<input
             type="text"
             #RefTypeDpto
-            class="form-control text-uppercase"
+            placeholder="escriba aqui para buscar"
+            class="form-control"
             formControlName="DepartamentoAux"
             [ngbTypeahead]="typeAheadSearchDpto"
             (selectItem)="typeAheadselectItemDpto($event, RefTypeDpto)"
             (blur)="typeAheadBlurDpto(RefTypeDpto)"
             [resultFormatter]="typeAheadformatterDpto"
             [inputFormatter]="typeAheadformatterDpto"
+             [ngClass]="{
+            'is-invalid':
+              (FormReg.controls.DepartamentoAux.touched || submitted) &&
+              FormReg.controls.IdDepartamento.invalid,
+            'is-valid': FormReg.controls.IdDepartamento.valid
+          }"
           />
 				</div>
-					<small class='ml-5'>Ingrese parte del nombre del departamento a buscar, seleccione con [↑↓] y [Enter] para elegir</small>
-
 					<span
           class="text-danger"
           *ngIf="
@@ -622,9 +626,9 @@
 
 			<!-- Campo Localidad -->
 			<div class="form-group row">
-				<label class="col-form-label col-sm-2 offset-sm-2" for="Localidad">
-        Localidad <span class="text-danger">*</span></label>
-				<div class="col-sm-6">
+				<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="Localidad">
+        Localidad<span class="text-danger">*</span>:</label>
+				<div class="col-sm-8 col-md-6">
 					<input
           type="text"
           class="form-control"
@@ -660,9 +664,9 @@
 
 			<!-- Campo Calle -->
 			<div class="form-group row">
-				<label class="col-form-label col-sm-2 offset-sm-2" for="Calle">
-        Calle <span class="text-danger">*</span></label>
-				<div class="col-sm-6">
+				<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="Calle">
+        Calle<span class="text-danger">*</span>:</label>
+				<div class="col-sm-8 col-md-6">
 					<input
           type="text"
           class="form-control"
@@ -698,10 +702,10 @@
 
 			<!--campo NumeroCalle-->
 			<div class="form-group row">
-				<label class="col-form-label col-sm-2 offset-sm-2" for="NumeroCalle">
-        Calle Numero <span class="text-danger">*</span>
+				<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="NumeroCalle">
+        Calle Numero<span class="text-danger">*</span>:
       </label>
-				<div class="col-sm-6">
+				<div class="col-sm-8 col-md-6">
 					<input
           type="text"
           name="NumeroCalle"
@@ -735,9 +739,9 @@
 			</div>
 			<!--campo FechaIngreso-->
 			<div class="form-group row">
-				<label class="col-form-label col-sm-2 offset-sm-2"
-        >Fecha de Ingreso <span class="text-danger">*</span></label>
-				<div class="col-sm-6">
+				<label class="col-form-label col-sm-4 col-md-3 offset-md-1 "
+        >Fecha de Ingreso<span class="text-danger">*</span>:</label>
+				<div class="col-sm-8 col-md-6">
 					<input
           class="form-control"
           name="FechaIngreso"
@@ -770,9 +774,9 @@
 			</div>
 			<!--campo FechaEgreso-->
 			<div class="form-group row">
-				<label class="col-form-label col-sm-2 offset-sm-2"
-        >Fecha de Egreso <span class="text-danger">*</span></label>
-				<div class="col-sm-6">
+				<label class="col-form-label col-sm-4 col-md-3 offset-md-1 "
+        >Fecha de Egreso:</label>
+				<div class="col-sm-8 col-md-6">
 					<input
           class="form-control"
           name="FechaEgreso"
@@ -787,15 +791,6 @@
 					<span
           class="text-danger"
           *ngIf="
-            (FormReg.controls.FechaEgreso.touched || submitted) &&
-            FormReg.controls.FechaEgreso.errors?.required
-          "
-        >
-          Dato requerido.
-        </span>
-					<span
-          class="text-danger"
-          *ngIf="
             FormReg.controls.FechaEgreso.errors?.pattern
           "
         >
@@ -806,9 +801,9 @@
 
 			<!--campo activo-->
 			<div class="form-group row">
-				<label class="col-form-label col-sm-2 offset-sm-2" for="Activo"
-        >Activo</label>
-				<div class="col-sm-6">
+				<label class="col-form-label col-sm-4 col-md-3 offset-md-1 " for="Activo"
+        >Activo:</label>
+				<div class="col-sm-8 col-md-6">
 					<select name="Activo" class="form-control"
           formControlName="Activo"  [attr.disabled]="true">
           <option *ngFor="let opt of OpcionesActivo" [ngValue]="opt.Id">
@@ -828,7 +823,7 @@
     >
       <span class="fas fa-check"></span> Grabar
     </button>
-		&nbsp;
+
 		<button class="btn btn-warning" (click)="Volver()">
       <span class="fas fa-undo"></span>
       {{ AccionABMC == "C" ? "Volver" : "Cancelar" }}

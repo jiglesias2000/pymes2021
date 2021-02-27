@@ -47,7 +47,7 @@ export class VentasConsultasComponent implements OnInit {
 
   ngOnInit() {
     var FechaHasta = new Date().toISOString();
-    var FechaDesde = this.utiles.Fecha_SumarDias(FechaHasta, -10);
+    var FechaDesde = this.utiles.Fecha_SumarDiasHoras(FechaHasta, -30, 0,0);
 
     this.FormBusqueda = this.formBuilder.group({
       IdCliente: [null],

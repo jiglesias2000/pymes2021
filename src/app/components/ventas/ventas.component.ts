@@ -16,6 +16,9 @@ import { HttpGenericoService } from "../../services/http-generico.service";
 import { HttpClient } from '@angular/common/http';
 import { ModalDialogService } from "../../services/modal-dialog.service";
 import { environment } from "../../../environments/environment";
+import { ClientesInfoComponent } from "../clientes-info/clientes-info.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { UtilesService } from "../../services/utiles.service";
 
 
 
@@ -31,7 +34,9 @@ export class VentasComponent implements OnInit {
     private articulosService: ArticulosService,
     private httpGenericoService: HttpGenericoService,
     private http: HttpClient,
-    private md : ModalDialogService
+    private ngbModal: NgbModal,
+    private md : ModalDialogService,
+    private utiles: UtilesService
 
   ) {}
 
@@ -46,7 +51,7 @@ export class VentasComponent implements OnInit {
   ngOnInit() {
     this.FormBusqueda = this.formBuilder.group({
       Cliente: [null],
-      Fecha: [(new Date()).toISOString()]
+      Fecha: [this.utiles.FechaHoraActual_ISO()]
     });
   }
   
@@ -108,7 +113,8 @@ export class VentasComponent implements OnInit {
     //si modifico el texto con el buscado, no se acepta y se borra.
     if (input.value != this.FormBusqueda.value.Cliente?.Nombre) {
       input.value = "";
-      this.FormBusqueda.value.Cliente = null;
+      //this.FormBusqueda.value.Cliente = null;  // no funciona bien, diferencia??
+      this.FormBusqueda.patchValue({ Cliente: null });
     }
   }
 
@@ -168,8 +174,19 @@ export class VentasComponent implements OnInit {
     });
   }
   ReiniciarVenta() {
-    this.FormBusqueda.value.Cliente = null;
+    this.FormBusqueda.patchValue({ Cliente: null });
     this.Items = [];
     this.CalcularTotales();
     }
+
+     VerInfoCliente() {
+      if (this.FormBusqueda.value.Cliente) {
+        const modalRef = this.ngbModal.open(ClientesInfoComponent,
+          { centered: true, backdrop: 'static', size: 'lg', windowClass: 'modal-xl' });
+        modalRef.componentInstance.Cliente = this.FormBusqueda.value.Cliente;
+      }
+      else {
+        this.md.Alert("No hay cliente seleccionado!!!");
+      }
+  }
 }

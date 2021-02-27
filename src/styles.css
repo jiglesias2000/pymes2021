@@ -1,9 +1,21 @@
 /* Add application styles & imports to this file! */
 body {
-  min-height: 100%;
+  /* min-height: 100%; */
+  background-color: rgb(241, 243, 247);
+}
+#divBody {
+  background-color: white;
+  min-height: 80vh;
+}
+footer {
+  padding: 1em;
+  /* background-color: rgb(241, 243, 247); */
 }
 
 h3 {
+  color: white;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+
   border-bottom-style: solid;
   border-color: gray;
   border-bottom-width: thin;
@@ -13,12 +25,23 @@ h3 {
 
 form {
   background-color: rgb(241, 243, 247);
+  border-radius: 0.5em;
   border-style: solid;
   border-color: lightgrey;
   border-width: thin;
   margin: 0em 0.5em 0.5em 0.5em;
   padding: 0.5em;
 }
+
+#divMsjFormRegistro {
+  margin: 1em;
+}
+
+/* @media screen and (min-width: 768px) {
+  form {
+    padding: 2.5em 2.5em 2.5em ;
+  }
+} */
 
 /* todos los imput a mayusculas, y no sus placeholders*/
 input {
@@ -50,9 +73,4 @@ thead {
   color: #495057;
   background-color: #e9ecef;
   border-color: #dee2e6;
-}
-
-.copyright {
-  padding: 1em;
-  background-color: rgb(241, 243, 247);
 }

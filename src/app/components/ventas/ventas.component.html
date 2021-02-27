@@ -1,8 +1,8 @@
 <h3>{{ Titulo }}</h3>
 
-<form [formGroup]="FormBusqueda">
+<form [formGroup]="FormBusqueda" class="rounded-lg">
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2 offset-sm-1 text-ri">Fecha<span class="text-danger">* </span>:</label>
+		<label class="col-form-label col-sm-2 offset-sm-1 text-ri">Fecha<span class="text-danger">*</span>:</label>
 		<div class="col-sm-3 input-group">
 			<input
         class="form-control"
@@ -24,39 +24,48 @@
 	</div>
 
 	<div class="form-group row">
-		<label class="col-form-label col-sm-2 offset-sm-1">Cliente<span class="text-danger">* </span>:</label>
+		<label class="col-form-label col-sm-2 offset-sm-1">Cliente<span class="text-danger">*</span>:</label>
 		<div class="col-sm-6">
 			<div class="input-group">
 				<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
-					<i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
+					<span class="input-group-text"> <i class="fas fa-search"></i></span>
 				</div>
 				<input
         type="text"
-        autofocus
-        class="form-control text-uppercase"
+        placeholder="escriba aqui para buscar"
+        class="form-control"
         #refCliente
+        formControlName="Cliente"
         [ngbTypeahead]="typeAheadSearch_cli"
         (selectItem)="typeAheadselectItem_cli($event, refCliente)"
         (blur)="typeAheadBlur_cli(refCliente)"
         [resultFormatter]="typeAheadformatter_cli"
         [inputFormatter]="typeAheadformatter_cli"
       />
+				<button
+            class="btn btn-outline-secondary mx-3"
+            (click)="VerInfoCliente()"
+            type="button"
+          >
+            <i class="fas fa-info-circle" aria-hidden="true" ngbTooltip="mas informacion..."></i>
+          </button>
 			</div>
-				<small class='ml-3'>Ingrese parte del nombre del cliente a buscar, seleccione con [↑↓] y [Enter] para elegir</small>
+			<!-- <small class='ml-3'>Ingrese parte del nombre del cliente a buscar, seleccione con [↑↓] y [Enter] para elegir</small> -->
 
-			</div>
 		</div>
+	</div>
 
-		<div class="form-group row">
-			<label class="col-form-label col-sm-2 offset-sm-1">Agregar Articulo<span class="text-danger">* </span>:</label>
-			<div class="col-sm-6">
-				<div class="input-group">
-					<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
-						<i class="fa fa-list-alt input-group-text" aria-hidden="true"></i>
-					</div>
-					<input
+	<div class="form-group row">
+		<label class="col-form-label col-sm-2 offset-sm-1">Agregar Articulo<span class="text-danger">*</span>:</label>
+		<div class="col-sm-6">
+			<div class="input-group">
+				<div class="input-group-prepend" ngbTooltip="Busqueda progresiva segun texto ingresado...">
+					<span class="input-group-text"> <i class="fas fa-search"></i></span>
+				</div>
+				<input
       type="text"
-      class="form-control text-uppercase"
+      placeholder="escriba aqui para buscar"
+      class="form-control"
       #RefArticulo
       [ngbTypeahead]="typeAheadSearch"
       (selectItem)="typeAheadselectItem($event, RefArticulo)"
@@ -65,9 +74,9 @@
       [inputFormatter]="typeAheadformatter"
     />
 			</div>
-					<small class='ml-3'>Ingrese parte del nombre del articulo a buscar, seleccione con [↑↓] y [Enter] para agregar</small>
-				</div>
+				<!-- <small class='ml-3'>Ingrese parte del nombre del articulo a buscar, seleccione con [↑↓] y [Enter] para agregar</small> -->
 			</div>
+		</div>
 
 </form>
 

@@ -14,8 +14,8 @@ import { environment } from "../../environments/environment";
 export class HttpGenericoService {
   pathResourceUrl: string;
   constructor(private httpClient: HttpClient) {
-    //this.pathResourceUrl = environment.ConexionWebApiProxy +  ""
-    this.pathResourceUrl = environment.ConexionWebApiAzure;
+    //this.pathResourceUrl = environment.ConexionWebApiAzure;
+    this.pathResourceUrl = environment.ConexionWebApiProxy;
   }
 
   get(Recurso: string, params) {

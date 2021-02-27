@@ -7,7 +7,7 @@
             Nombre:
         </label>
 		<div class="col-sm-3">
-			<input type="text" name="Nombre" class="form-control text-uppercase" formControlName="Nombre" maxlength="55"/>
+			<input type="text" name="Nombre" class="form-control" formControlName="Nombre" maxlength="55"/>
         </div>
 			<label class="col-form-label col-sm-2  text-left">
             Activo:
@@ -41,8 +41,8 @@
 				<th class="text-center">Nombre</th>
 				<th class="text-center">Precio</th>
 				<th class="text-center">Stock</th>
+				<th class="text-center">Familia</th>
 				<th class="text-center">Fecha de Alta</th>
-				<th>Familia</th>
 				<th class="text-center">Activo</th>
 				<th class="text-center text-nowrap">Acciones</th>
 			</tr>
@@ -52,8 +52,8 @@
 				<td>{{dto.Nombre | uppercase}}</td>
 				<td class="text-right">{{dto.Precio | currency:'$'}}</td>
 				<td class="text-right">{{dto.Stock}}</td>
-				<td class="text-right">{{dto.FechaAlta| date:'dd/MM/yyyy'}}</td>
 				<td>{{GetArticuloFamiliaNombre(dto.IdArticuloFamilia)}}</td>
+				<td class="text-right">{{dto.FechaAlta| date:'dd/MM/yyyy'}}</td>
 				<td>{{dto.Activo ? 'SI' : 'NO'}}</td>
 				<td class="text-center text-nowrap">
 					<button class="btn btn-sm btn-outline-primary" title="Ver" (click)="Consultar(dto)">
@@ -71,16 +71,16 @@
 		</tbody>
 	</table>
 	<!-- Paginador-->
-	<div id="divPaginador" class="col-sm-12">
+	<div id="divPaginador" class="m-2">
 		<div class="row bg-light">
-			<div class="col-sm-3">
+			<div class="col-sm-3 align-self-center">
 				<span class="label label-default font-weight-bold">Registros: {{RegistrosTotal}}</span>
 			</div>
-			<div class="col-sm-6 text-center">
+			<div class="col-sm-6 text-center align-self-center">
 				<ngb-pagination [(page)]="Pagina" (pageChange)="Buscar()" [pageSize]="10" [maxSize]="10"
 					[collectionSize]="RegistrosTotal"></ngb-pagination>
 			</div>
-			<div class="col-sm-3 text-right">
+			<div class="col-sm-3 text-right align-self-center">
 				<button class="btn btn-primary" (click)="ImprimirListado()"><span class="fas fa-print"></span>
                     Imprimir</button>
 			</div>
@@ -225,6 +225,7 @@
 		<div class="form-group row">
 			<label class="col-form-label col-sm-2 offset-sm-2" for="Activo">Activo</label>
 			<div class="col-sm-6">
+				<!-- ref?? disabled html no fucniona en reactive forms? -->
 				<select class="form-control" name="Activo" formControlName="Activo" [attr.disabled]="true">
             <option *ngFor="let opt of OpcionesActivo" [ngValue]="opt.Id" >
                         ‌{{ opt.Nombre }}
